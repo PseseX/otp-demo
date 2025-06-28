@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OTP Panel</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #0d1117;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .card, .login {
+      background: #161b22;
+      border-radius: 12px;
+      padding: 30px;
+      text-align: center;
+      width: 320px;
+    }
+    .logo {
+      width: 50px;
+      height: 50px;
+      margin-bottom: 12px;
+    }
+    .otp {
+      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 4px;
+      margin: 10px 0;
+    }
+    input[type="password"], button {
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: none;
+      width: 100%;
+    }
+    input[type="password"] {
+      background: #0d1117;
+      color: white;
+      border: 1px solid #30363d;
+    }
+    button {
+      background-color: #238636;
+      color: white;
+      cursor: pointer;
+    }
+    .copied {
+      font-size: 12px;
+      color: #9ae6b4;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="login" id="login-box">
+    <h3>Enter Access Key</h3>
+    <input type="password" id="accessKey" placeholder="Access key">
+    <button onclick="validateKey()">Enter</button>
+  </div>
+
+  <div style="display:none;" class="card" id="dashboard">
+    <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg" />
+    <h2>ChatGPT</h2>
+    <p><b>Email:</b> DJpsese@outlook.com</p>
+    <p><b>Password:</b> Fst2Bnd2</p>
+    <div id="otp" class="otp">------</div>
+    <button onclick="copyOTP()">Copy OTP</button>
+    <div id="copied" class="copied" style="display:none;">OTP copied!</div>
+  </div>
+
+  <script>
+    const key = "pseseXotp";
+    function validateKey() {
+      const input = document.getElementById("accessKey").value;
+      if (input === key) {
+        document.getElementById("login-box").style.display = "none";
+        document.getElementById("dashboard").style.display = "block";
+        updateOTP();
+        setInterval(updateOTP, 30000);
+      } else {
+        alert("Access denied");
+      }
+    }
+    function generateOTP() {
+      return Math.floor(100000 + Math.random() * 900000).toString();
+    }
+    function updateOTP() {
+      const otp = generateOTP();
+      document.getElementById("otp").textContent = otp;
+      document.getElementById("copied").style.display = 'none';
+    }
+    function copyOTP() {
+      const otp = document.getElementById("otp").textContent;
+      navigator.clipboard.writeText(otp).then(() => {
+        document.getElementById("copied").style.display = 'block';
+      });
+    }
+  </script>
+</body>
+</html>
